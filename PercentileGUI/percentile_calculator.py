@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+import matplotlib.pyplot as plt
 
 class PercentileCalculator:
     def __init__(self):
@@ -19,6 +20,7 @@ class PercentileCalculator:
         tk.Button(self.window, text="Calculate Percentile", command=self.calculate_percentile).grid(row=2, column=0)
         tk.Button(self.window, text="Clear", command=self.clear_fields).grid(row=2, column=1)
         tk.Button(self.window, text="Exit", command=self.window.destroy).grid(row=2, column=2)
+        tk.Button(self.window, text="Visualize", command=self.visualize_data).grid(row=2, column=3)
 
         # Create result field
         tk.Label(self.window, text="Percentile").grid(row=3, column=0)
@@ -27,7 +29,7 @@ class PercentileCalculator:
 
         # Create status bar
         self.status_bar = tk.Label(self.window, text="Ready", bd=1, relief=tk.SUNKEN, anchor=tk.W)
-        self.status_bar.grid(row=4, column=0, columnspan=3)
+        self.status_bar.grid(row=4, column=0, columnspan=4)
 
         # Create menu bar
         self.menu_bar = tk.Menu(self.window)
@@ -40,6 +42,11 @@ class PercentileCalculator:
         self.help_menu = tk.Menu(self.menu_bar)
         self.help_menu.add_command(label="About", command=self.show_about)
         self.menu_bar.add_cascade(label="Help", menu=self.help_menu)
+
+        # Create customization options
+        self.customization_menu = tk.Menu(self.menu_bar)
+        self.customization_menu.add_command(label="Change Color Scheme", command=self.change_color_scheme)
+        self.menu_bar.add_cascade(label="Customization", menu=self.customization_menu)
 
     def calculate_percentile(self):
         try:
@@ -66,12 +73,35 @@ class PercentileCalculator:
         self.percentile_field.delete(0, tk.END)
         self.status_bar.config(text="Ready")
 
+    def visualize_data(self):
+        try:
+            rank = int(self.rank_field.get())
+            total_participants = int(self.total_participants_field.get())
+
+            if rank < 1 or total_participants < 1:
+                raise ValueError("Rank and total participants must be positive integers.")
+
+            if rank > total_participants:
+                raise ValueError("Rank cannot be greater than total participants.")
+            percentile = round((total_participants - rank) / total_participants * 100, 3)
+            plt.bar(["Rank", "Total Participants"], [rank, total_participants])
+            plt.xlabel("Category")
+            plt.ylabel("Value")
+            plt.title("Percentile Data")
+            plt.show()
+            self.status_bar.config(text="Data visualized successfully!")
+        except ValueError as e:
+            messagebox.showerror("Error", str(e))
+            self.status_bar.config(text="Error occurred!")
     def show_about(self):
         messagebox.showinfo("About", "Percentile Calculator v1.0")
 
+    def change_color_scheme(self):
+        # Add code to change color scheme here
+        pass
+
     def run(self):
         self.window.mainloop()
-
 if __name__ == "__main__":
     calculator = PercentileCalculator()
     calculator.run()

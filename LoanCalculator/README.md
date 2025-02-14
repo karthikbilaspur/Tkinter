@@ -23,4 +23,6 @@ Contributing
 Contributions are welcome! If you'd like to report a bug, suggest a feature, or submit a pull request, please feel free to do so.
 License
 This project is licensed under the MIT License. See the LICENSE file for details.
+Author
+V.karthik
 
