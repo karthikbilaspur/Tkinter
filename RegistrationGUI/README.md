@@ -1,16 +1,18 @@
-Registration Form Project
 Summary
 A registration form application built with Python and Tkinter. The application allows users to fill out a registration form and save their data to an Excel file.
+
 Features
 User-friendly GUI interface
 Validation for required fields
 Data saved to an Excel file
 Configuration file for easy customization
+
 Requirements
 Python 3.x
 Tkinter library
 openpyxl library
 configparser library
+
 Installation
 Install the required libraries by running pip install tk openpyxl configparser in your terminal/command prompt.
 Download the project files and extract them to a directory of your choice.
@@ -31,3 +33,5 @@ Create a configuration file named config.ini in the same directory as the projec
 
 This project is licensed under the MIT License. See LICENSE.txt for details.
 
+## Author 
+V.Karthik  

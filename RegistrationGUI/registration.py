@@ -1,7 +1,13 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, simpledialog
 from openpyxl import load_workbook
 import configparser
+import hashlib
+import logging
+import os
+
+# Set up logging
+logging.basicConfig(filename='app.log', level=logging.INFO)
 
 class RegistrationForm:
     def __init__(self):
@@ -70,9 +76,12 @@ class RegistrationForm:
         clear = tk.Button(self.root, text="Clear", fg="Black", bg="Red", command=self.clear_fields)
         clear.grid(row=8, column=2)
 
+        login = tk.Button(self.root, text="Login", fg="Black", bg="Red", command=self.login)
+        login.grid(row=8, column=3)
+
         # Create a text box to display messages
         self.message_box = tk.Text(self.root, height=5, width=40)
-        self.message_box.grid(row=9, column=0, columnspan=3)
+        self.message_box.grid(row=9, column=0, columnspan=4)
 
     def insert_data(self):
         try:
@@ -90,14 +99,20 @@ class RegistrationForm:
                 self.message_box.insert(tk.END, "Please fill all fields!\n")
                 return
 
+            # Hash sensitive data
+            contact_no_hash = hashlib.sha256(contact_no.encode()).hexdigest()
+            email_id_hash = hashlib.sha256(email_id.encode()).hexdigest()
+
             # Save data to Excel file
             wb = load_workbook(self.config['Excel']['file_path'])
             sheet = wb.active
-            sheet.append([name, course, sem, form_no, contact_no, email_id, address])
+            sheet.append([name, course, sem, form_no, contact_no_hash, email_id_hash, address])
             wb.save(self.config['Excel']['file_path'])
-            self.message_box.insert(tk.END, "Data saved successfully!\n")
+                        self.message_box.insert(tk.END, "Data saved successfully!\n")
+            logging.info("Data saved successfully!")
         except Exception as e:
             self.message_box.insert(tk.END, f"An error occurred: {str(e)}\n")
+            logging.error(f"An error occurred: {str(e)}")
 
     def clear_fields(self):
         # Clear entry fields
@@ -108,6 +123,42 @@ class RegistrationForm:
         self.contact_no_field.delete(0, tk.END)
         self.email_id_field.delete(0, tk.END)
         self.address_field.delete(0, tk.END)
+
+    def login(self):
+        # Create a new window for login
+        self.login_window = tk.Toplevel(self.root)
+        self.login_window.title("Login")
+
+        # Create labels and entry fields
+        username_label = tk.Label(self.login_window, text="Username")
+        username_label.grid(row=0, column=0)
+        self.username_field = tk.Entry(self.login_window)
+        self.username_field.grid(row=0, column=1)
+
+        password_label = tk.Label(self.login_window, text="Password")
+        password_label.grid(row=1, column=0)
+        self.password_field = tk.Entry(self.login_window, show="*")
+        self.password_field.grid(row=1, column=1)
+
+        # Create a button to submit the login credentials
+        submit_button = tk.Button(self.login_window, text="Submit", command=self.check_credentials)
+        submit_button.grid(row=2, column=1)
+
+    def check_credentials(self):
+        # Get the username and password from the entry fields
+        username = self.username_field.get()
+        password = self.password_field.get()
+
+        # Hash the password
+        password_hash = hashlib.sha256(password.encode()).hexdigest()
+
+        # Check if the username and password match the stored credentials
+        if username == self.config['Credentials']['username'] and password_hash == self.config['Credentials']['password_hash']:
+            self.message_box.insert(tk.END, "Login successful!\n")
+            logging.info("Login successful!")
+        else:
+            self.message_box.insert(tk.END, "Invalid username or password!\n")
+            logging.error("Invalid username or password!")
 
     def run(self):
         self.root.mainloop()
