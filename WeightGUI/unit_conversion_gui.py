@@ -1,10 +1,3 @@
-"""
-Weight Converter Application
-
-This application allows users to convert weights between different units.
-"""
-
-
 from tkinter import *
 from tkinter import messagebox
 

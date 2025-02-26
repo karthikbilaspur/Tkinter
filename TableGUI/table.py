@@ -110,28 +110,3 @@ class TableApp:
                 e.grid(row=i, column=j)
                 e.insert(tk.END, value)
 
-# Example usage
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = TableApp(root)
-
-    # Set table headers
-    headers = ["ID", "Name", "City", "Age"]
-    app.set_headers(headers)
-
-    # Set table data
-    data = [
-        (1, 'Mohammed', 'Dubai', 19),
-        (2, 'Ali', 'Kuala Lumpur', 18),
-        (3, 'Fatima', 'Istanbul', 20),
-        (4, 'Aisha', 'Cairo', 21),
-        (5, 'Omar', 'Riyadh', 21),
-        (6, 'Abdullah', 'Jeddah', 22),
-        (7, 'Hassan', 'Doha', 20),
-        (8, 'Rahman', 'Manama', 21),
-        (9, 'Sami', 'Muscat', 19),
-        (10, 'Yusuf', 'Abu Dhabi', 22)
-    ]
-    app.set_data(data)
-
-    root.mainloop()

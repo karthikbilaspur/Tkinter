@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 from tkinter.ttk import Progressbar
 from time import sleep
 import webbrowser
@@ -22,56 +22,56 @@ class UnitConverterApp:
 
     def create_widgets(self):
         """Create UI widgets"""
-        entry = tk.Label(self.wind, bg="#008080", fg="white",
+        title = tk.Label(self.wind, bg="#008080", fg="white",
                       text="Welcome to Unit Converter!",
                       font=("Footlight MT Light", 15, "bold"))
-        entry.place(x=50, y=30, width=410, height=30)
+        title.place(x=50, y=30, width=410, height=30)
 
         self.load = Progressbar(self.wind, orient=tk.HORIZONTAL,
                                 length=250,
                                 mode='indeterminate')
 
-        self.start = tk.Button(self.wind, bg="#f5f5f5", fg="black",
+        start_button = tk.Button(self.wind, bg="#f5f5f5", fg="black",
                             text="START", command=self.loading)
-        self.start.place(x=200, y=90,
+        start_button.place(x=200, y=90,
                         width=80, height=30)
 
-        follow = tk.Label(self.wind, bg="#008080", fg="white",
+        follow_label = tk.Label(self.wind, bg="#008080", fg="white",
                        text="Follow Me On",
                        font=("Helvetica", 12, "bold"))
-        follow.place(x=186, y=150, width=104,
+        follow_label.place(x=186, y=150, width=104,
                      height=20)
 
         self.git = tk.PhotoImage(file=r'gforg.png')
-        github = tk.Button(self.wind, image=self.git, bg="white",
+        github_button = tk.Button(self.wind, image=self.git, bg="white",
                         relief=tk.FLAT,
                         command=lambda: self.open_url("https://github.com/your-username"),
                         cursor="hand2")
-        github.place(x=110, y=190, width=30,
+        github_button.place(x=110, y=190, width=30,
                      height=30)
 
         self.instag = tk.PhotoImage(file=r'ins.png')
-        insta = tk.Button(self.wind, image=self.instag,
+        insta_button = tk.Button(self.wind, image=self.instag,
                        bg="#008080", relief=tk.FLAT,
                        command=lambda: self.open_url("https://www.instagram.com/your-username"),
                        cursor="hand2")
-        insta.place(x=190, y=190, width=30,
+        insta_button.place(x=190, y=190, width=30,
                     height=30)
 
         self.fcb = tk.PhotoImage(file=r'fb.png')
-        fb = tk.Button(self.wind, image=self.fcb, bg="white",
+        fb_button = tk.Button(self.wind, image=self.fcb, bg="white",
                     relief=tk.FLAT,
                     command=lambda: self.open_url("https://www.facebook.com/your-username"),
                     cursor="hand2")
-        fb.place(x=270, y=190, width=30,
+        fb_button.place(x=270, y=190, width=30,
                  height=30)
 
         self.tweet = tk.PhotoImage(file=r'twitter.png')
-        twitter = tk.Button(self.wind, image=self.tweet,
+        twitter_button = tk.Button(self.wind, image=self.tweet,
                          bg="white", relief=tk.FLAT,
                          command=lambda: self.open_url("https://twitter.com/your-username"),
                          cursor="hand2")
-        twitter.place(x=350, y=190,
+        twitter_button.place(x=350, y=190,
                       width=30, height=30)
 
     def open_url(self, url):
@@ -80,7 +80,8 @@ class UnitConverterApp:
 
     def loading(self):
         """Simulate a loading animation"""
-        self.start.place(x=0, y=0, width=0,
+        start_button = self.wind.winfo_children()[1]
+        start_button.place(x=0, y=0, width=0,
                          height=0)
         self.load.place(x=120, y=100)
         self.wind.update()

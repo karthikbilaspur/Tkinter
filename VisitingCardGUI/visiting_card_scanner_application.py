@@ -1,14 +1,3 @@
-"""
-Visiting Card Scanner Application
-
-This application allows users to upload an image of a visiting card,
-scan the image using OCR, and display the extracted text.
-
-Author: [V.Karthik]
-Date: [10/10/2024]
-"""
-
-
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
@@ -34,9 +23,9 @@ class VisitingCardScanner:
         """
         self.root = root
         self.root.title("Visiting Card Scanner")
-        self.root.geometry("800x500")
-        self.root.maxsize(1000, 500)
-        self.root.minsize(600, 500)
+        self.root.geometry("800x600")
+        self.root.maxsize(1000, 600)
+        self.root.minsize(600, 600)
 
         self.create_menu_bar()
         self.create_widgets()
@@ -74,8 +63,8 @@ class VisitingCardScanner:
         self.status_label = tk.Label(self.root, text="Please upload an image to scan", bg="white", fg="red")
         self.status_label.pack()
 
-        self.text_area = tk.Text(self.root, height=9, font=("Times", 13))
-        self.text_area.pack(side="bottom", fill="x")
+        self.text_area = tk.Text(self.root, height=15, font=("Times", 13))
+        self.text_area.pack(side="bottom", fill="both", expand=True)
 
         convert_button = tk.Button(self.root, text="Scan and Convert", bg="#F58D4B", font=("Times", 15), command=self.convert)
         convert_button.pack(side="bottom", pady="10")
@@ -105,7 +94,7 @@ class VisitingCardScanner:
             self.uploaded_image_label.destroy()
 
         img = Image.open(self.filename)
-        img.thumbnail((200, 200))
+        img.thumbnail((300, 300))
         photo = ImageTk.PhotoImage(img)
         self.uploaded_image_label = tk.Label(self.root, image=photo)
         self.uploaded_image_label.image = photo
