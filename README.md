@@ -1,3 +1,5 @@
+[[Python CI](https://github.com/karthikbilaspur/Tkinter/actions/workflows/python-app.yml/badge.svg)](https://github.com/karthikbilaspur/Tkinter/actions/workflows/python-app.yml)
+
 A comprehensive collection of 35+ Python GUI applications built with Tkinter. This repository covers beginner to advanced projects including AI integrations, utility tools, management systems, and computer vision apps. Perfect for learning desktop app development in Python.
 
 ### 🚀 Live Demo
